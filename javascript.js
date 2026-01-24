@@ -1,6 +1,7 @@
 let valueA="";
 let valueB="";
 let currentOperator=null;
+let resultShown=false;
 
 
 const numbers=document.querySelectorAll('.bttn-number');
@@ -39,12 +40,21 @@ function getResult ()
  if (valueA!=="" && valueB!=="" && currentOperator!==null) 
     {
         const result=operate(currentOperator, valueA, valueB);
-        console.log ({result})
-    } else 
-    {
-         console.log("ERROR");  
-    }
+        console.log ({result});
+        resultShown=true;
+        valueA=result.toString();
+        valueB="";
+        currentOperator=null;
+    } 
 
+}
+
+
+function startAgain () {
+    valueA="";
+    valueB="";
+    currentOperator=null;
+    resultShown=false;
 }
 
 
@@ -56,7 +66,10 @@ numbers.forEach ((button) =>
 {
     button.addEventListener('click', (e) => 
     {
-       
+        if (resultShown==true)
+        {
+            startAgain();
+        }
         if (currentOperator===null) 
         {
             getValueA(e);
@@ -66,12 +79,15 @@ numbers.forEach ((button) =>
     });
 });
 
-//listener for assinging operator
+//listener for assigning operator
 operators.forEach((button) => 
 {
     button.addEventListener('click',(e) => 
-    {
+    {    
+        getResult();
+        
         currentOperator = e.target.dataset.operator;
+        resultShown=false;
     });
 });
 
