@@ -1,11 +1,27 @@
-My Odin Calculator
+🔢 Modern Web Calculator
+A fully functional, browser-based calculator built with vanilla JavaScript, HTML, and CSS. This project focuses on handling complex user inputs, mathematical logic, and a clean, responsive interface.
 
-Hey there! This is my **Calculator Project**, the final challenge for the Foundations path of [The Odin Project](https://www.theodinproject.com/).
+🔗 View the Live Demo https://daigonzalesa.github.io/TOP---Calculator-/
 
-## What I used:
-- **Clean HTML5:** Structuring the buttons and the display.
-- **CSS3:** Making it look like a calculator I'd actually want to use.
-- **Vanilla JavaScript:** - Using **Objects** (my `Library`) to keep the math organized.
-  - **Arrow functions** for clean, modern code.
-  - **DOM Manipulation** to capture every click.
-  - **Logic & State:** Managing variables so the calculator "remembers" what you typed.
+🎮 Features
+Core Operations: Handles addition, subtraction, multiplication, and division.
+
+Decimal Support: Precision handling for decimal calculations.
+
+Display Logic: Dynamic screen that updates as you type and clears upon calculation.
+
+Error Handling: Prevents "scientific disasters" like dividing by zero.
+
+🛠 Tech Stack
+HTML5: Structured using a clean grid of buttons and a display screen.
+
+CSS3: Custom-styled with a professional aesthetic, using Flexbox or CSS Grid for perfect button alignment.
+
+JavaScript (ES6): Implements the logic for operations, managing the display state, and handling "order of operations" bugs.
+
+🧠 What I Learned
+The Calculator was the ultimate test of my logic. I mastered:
+
+The "Logic Flow": How to store the first number, wait for the operator, and then execute the math when the second number is entered.
+
+Edge Cases: Learning how to prevent users from typing multiple decimal points or breaking the UI with long numbers.
