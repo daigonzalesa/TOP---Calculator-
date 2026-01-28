@@ -10,6 +10,7 @@ const equal=document.querySelector('#bttn-equal');
 const clear=document.querySelector('#bttn-clear');
 const del=document.querySelector('#bttn-delete');
 const display=document.querySelector('#display-screen');
+const history=document.querySelector('#history-screen');
 
 const Library = 
 {
@@ -17,26 +18,26 @@ const Library =
 "-": (a,b) => a-b,
 "*": (a,b) => a*b,
 "/": (a,b) =>  a/b,
+"^": (a, b) => a ** b,
+"√": (a) => Math.sqrt(a),
 }
 
 const updateValue = (e) => {
 
     const input=e.target.dataset.value;
 
-    if (input=='.' && (currentOperator===null?valueA:valueB).includes('.')) 
-        {
-            return;
-        }
+    if (input=='.' && (currentOperator===null?valueA:valueB).includes('.'))   return;
+    
        
     if (currentOperator===null) 
-        {
-            valueA += e.target.dataset.value; 
-            console.log({valueA});;
-        } else 
-        {
-            valueB += e.target.dataset.value; 
-            console.log({valueB});;   
-        }
+    {
+        valueA += input; 
+        console.log({valueA});;
+    } else 
+    {
+        valueB += input; 
+        console.log({valueB});
+    }   
 
     updateScreen(currentOperator == null? valueA:valueB);
 }
@@ -46,22 +47,33 @@ const operate = (operator, a, b) => Library[operator](Number(a), Number(b));
 
 const getResult = () =>
 {
+    if (valueA!=="" && currentOperator=="√") 
+    {
+        historyScreen("√"+valueA);
+        const result= Library["√"](Number(valueA));
+        valueA=result.toFixed(5).toString();
+        updateScreen(valueA);
+        
+        return; 
+    }
+    
+    
     if (valueA!=="" && valueB!=="" && currentOperator!==null) 
     {
-        if (currentOperator === "/" && valueB === "0")
+        if (currentOperator=="/" && Number(valueB)==0)
         {
         updateScreen('Error: Divide by Zero');
-       // reset();
+        reset();
         return;
         }
 
         const result=operate(currentOperator, valueA, valueB);
-        console.log ({result});
+        historyScreen(Number(valueA)+" "+currentOperator+" "+Number(valueB)+ " = ");
         resultShown=true;
-        valueA=result.toString();
+        valueA=result.toFixed(5);
         valueB="";
         currentOperator=null;
-        updateScreen (valueA);
+        updateScreen (Number(valueA));
     } 
     
 }
@@ -73,6 +85,7 @@ const reset = () => {
     resultShown=false;
 
     updateScreen('0');
+    historyScreen("");
 }
 
 
@@ -98,10 +111,15 @@ const deleteLast = () => {
 const updateScreen = (content) => {
     display.textContent= content ===""?"0":content;
 }
+
+const historyScreen = (content) => {
+    history.textContent = content;
+}
 // listeners --------------------------------------------------------------------
 equal.addEventListener('click',getResult)
 clear.addEventListener('click', reset);
 del.addEventListener('click',deleteLast);
+
 //listener for assigning a,b values
 numbers.forEach ((button) => 
 {
@@ -117,7 +135,10 @@ operators.forEach((button) =>
 {
     button.addEventListener('click',(e) => 
     {    
-        getResult();
+        if (valueA === "") return;
+
+        if (valueB !=="") getResult();
+
         currentOperator = e.target.dataset.operator;
         resultShown=false;
     });
